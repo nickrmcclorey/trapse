@@ -1,0 +1,157 @@
+[
+{
+  "directory": "/home/hawkinsw/code/trapse-build",
+  "command": "/usr/bin/cc   -g   -o CMakeFiles/hello_world.dir/hello_world.c.o   -c /home/hawkinsw/code/trapse/hello_world.c",
+  "file": "/home/hawkinsw/code/trapse/hello_world.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build",
+  "command": "/usr/bin/cc  -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -pthread -o CMakeFiles/trapse.dir/trapse.c.o   -c /home/hawkinsw/code/trapse/trapse.c",
+  "file": "/home/hawkinsw/code/trapse/trapse.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/MetaInfo.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/MetaInfo.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/MetaInfo.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/Mnemonic.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/Mnemonic.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/Mnemonic.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/Register.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/Register.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/Register.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/SharedData.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/SharedData.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/SharedData.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/String.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/String.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/String.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/Utils.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/Utils.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/Utils.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/Zydis.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/Zydis.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/Zydis.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/Decoder.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/Decoder.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/Decoder.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/DecoderData.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/DecoderData.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/DecoderData.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/Encoder.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/Encoder.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/Encoder.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/EncoderData.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/EncoderData.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/EncoderData.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/Formatter.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/Formatter.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/Formatter.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/FormatterBuffer.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/FormatterBuffer.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/FormatterBuffer.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/FormatterATT.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/FormatterATT.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/FormatterATT.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/FormatterBase.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/FormatterBase.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/FormatterBase.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
+  "command": "/usr/bin/cc -DZYDIS_EXPORTS -D_CRT_SECURE_NO_WARNINGS -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/src -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -std=c99 -pthread -o CMakeFiles/Zydis.dir/src/FormatterIntel.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/src/FormatterIntel.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/src/FormatterIntel.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/API/Memory.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Memory.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Memory.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/API/Process.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Process.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Process.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/API/Synchronization.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Synchronization.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Synchronization.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/API/Terminal.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Terminal.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Terminal.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/API/Thread.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Thread.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/API/Thread.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/Allocator.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Allocator.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Allocator.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/ArgParse.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/ArgParse.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/ArgParse.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/Bitset.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Bitset.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Bitset.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/Format.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Format.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Format.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/List.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/List.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/List.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/String.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/String.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/String.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/Vector.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Vector.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Vector.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build/deps/zydis/zycore",
+  "command": "/usr/bin/cc -DZYCORE_EXPORTS -D_CRT_SECURE_NO_WARNINGS -D_GNU_SOURCE -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src  -g   -std=c99 -pthread -o CMakeFiles/Zycore.dir/src/Zycore.c.o   -c /home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Zycore.c",
+  "file": "/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/src/Zycore.c"
+}
+]
