@@ -20,11 +20,13 @@
 #include <unistd.h>
 #include <wait.h>
 
+#include <trapse/os.h>
+#include <trapse/global.h>
+#include <trapse/zydis.h>
+
 extern int errno;
 extern char **environ;
 
-#define LARGEST_X86_64_INSTR 15
-#define LARGEST_X86_64_INSTR_PADDED 16
 typedef struct {
   char *executable_name;
   bool debug;
@@ -44,66 +46,21 @@ _Bool parse_configuration(int argc, char *argv[], Configuration *config) {
 
 void usage(char *invocation) { printf("Usage: %s <executable>\n", invocation); }
 
-bool spawn(pid_t *child, char *trapsee_path) {
-  if (!(*child = fork())) {
-    char *child_argv[] = {trapsee_path, NULL};
-    /*
-     * We are in the child.
-     */
-    ptrace(PTRACE_TRACEME, 0, NULL, NULL);
-
-    // TODO (hawkinsw): Temporarily disable ASLR.
-    personality(ADDR_NO_RANDOMIZE);
-
-    execve(trapsee_path, child_argv, environ);
-    /*
-     * If execve returns, we know it failed.
-     */
-    exit(1);
-  }
-
-  if (*child == -1) {
-    fprintf(stderr, "Error forking trapsee: %s\n", strerror(errno));
-    return false;
-  }
-
-  return true;
-}
-
 void print_instruction_bytes(uint8_t *instruction_bytes) {
   for (int i = 0; i < LARGEST_X86_64_INSTR; i++) {
     printf("%hhx", instruction_bytes[i]);
   }
 }
 
-void initialize_disassembler(ZydisDecoder *decoder, ZydisFormatter *formatter) {
-  ZydisDecoderInit(decoder, ZYDIS_MACHINE_MODE_LONG_64, ZYDIS_STACK_WIDTH_64);
-  ZydisFormatterInit(formatter, ZYDIS_FORMATTER_STYLE_INTEL);
-}
+// Plug and play disassemblers as long as they can adhere to this interface!
+typedef struct {
+  bool (*initializer)(void *);
+  char *(*disassemble)(uint8_t *, uint64_t, void *);
+  void *cookie;
 
-void print_disassembled(uint8_t *instruction_bytes, uint64_t rip,
-                        ZydisDecoder *decoder, ZydisFormatter *formatter) {
-  ZydisDecodedInstruction instruction;
-  ZydisDecodedOperand operands[ZYDIS_MAX_OPERAND_COUNT_VISIBLE];
+} DisassemblerConfiguration;
 
-  if (ZYAN_FAILED((ZydisDecoderDecodeFull(
-          decoder, instruction_bytes, LARGEST_X86_64_INSTR, &instruction,
-          operands, ZYDIS_MAX_OPERAND_COUNT_VISIBLE,
-          ZYDIS_DFLAG_VISIBLE_OPERANDS_ONLY)))) {
-    printf("---DECODE FAILURE---");
-    return;
-  }
-
-  char decoded_instruction_buffer[256];
-  if (ZYAN_FAILED(ZydisFormatterFormatInstruction(
-          formatter, &instruction, operands, instruction.operand_count_visible,
-          decoded_instruction_buffer, sizeof(decoded_instruction_buffer),
-          rip))) {
-    printf("---DECODE FAILURE---");
-  }
-
-  puts(decoded_instruction_buffer);
-}
+// Functions for using the Zydis disassembler.
 
 int main(int argc, char *argv[]) {
   Configuration config = {};
@@ -115,7 +72,15 @@ int main(int argc, char *argv[]) {
   ZydisDecoder insn_decoder;
   ZydisFormatter insn_formatter;
 
-  initialize_disassembler(&insn_decoder, &insn_formatter);
+  ZydisCookie z_cookie = {.decoder = &insn_decoder,
+                          .formatter = &insn_formatter};
+  DisassemblerConfiguration disassembler_configuration = {
+      .initializer = zydis_initialize_disassembler,
+      .disassemble = zydis_get_instruction_disassembly,
+      .cookie = &z_cookie};
+
+
+  disassembler_configuration.initializer(disassembler_configuration.cookie);
 
   if (!parse_configuration(argc, argv, &config)) {
     usage(argv[0]);
@@ -142,18 +107,22 @@ int main(int argc, char *argv[]) {
     // Now, we loop!
     ptrace(PTRACE_SINGLESTEP, trapsee_pid, 0, 0);
 
-    if (config.debug)
+    if (config.debug) {
       printf("We are waitingpid ...\n");
+    }
+
     waitpid(trapsee_pid, &trapsee_status, 0);
 
     if (WIFSTOPPED(trapsee_status)) {
-      if (config.debug)
+      if (config.debug) {
         printf("Trapsee stopped ...\n");
+      }
     }
 
     if (WIFEXITED(trapsee_status)) {
-      if (config.debug)
+      if (config.debug) {
         printf("Trapsee has exited!\n");
+      }
       break;
     }
 
@@ -170,26 +139,7 @@ int main(int argc, char *argv[]) {
       printf("rip: 0x%llx\n", regs.rip);
     }
 
-    // Now, let's try to get the instruction's bytes!
-
-    // Clear errno -- because the return value of the next four calls to
-    // ptrace(3) return the value fetch (and not a status value), then a changed
-    // errno is the only signal we have that something went wrong.
-    errno = 0;
-
-    *((uint32_t *)(&(current_instruction[0]))) =
-        ptrace(PTRACE_PEEKDATA, trapsee_pid, regs.rip, NULL); // (4 bytes)
-    *((uint32_t *)(&(current_instruction[sizeof(uint32_t) * 1]))) =
-        ptrace(PTRACE_PEEKDATA, trapsee_pid, regs.rip + sizeof(uint32_t) * 1,
-               NULL); // (4 bytes)
-    *((uint32_t *)(&(current_instruction[sizeof(uint32_t) * 2]))) =
-        ptrace(PTRACE_PEEKDATA, trapsee_pid, regs.rip + sizeof(uint32_t) * 2,
-               NULL); // (4 bytes)
-    *((uint32_t *)(&(current_instruction[sizeof(uint32_t) * 3]))) =
-        ptrace(PTRACE_PEEKDATA, trapsee_pid, regs.rip + sizeof(uint32_t) * 3,
-               NULL); // (4 bytes)
-
-    if (errno) {
+    if (!get_instruction_bytes(trapsee_pid, regs.rip, current_instruction)) {
       fprintf(stderr, "Could not get instruction's bytes from trapsee: %s\n",
               strerror(errno));
       if (kill(trapsee_pid, SIGKILL)) {
@@ -197,15 +147,15 @@ int main(int argc, char *argv[]) {
       }
       exit(1);
     }
-    // We only want the first three of the last word.
 
     if (config.debug) {
       print_instruction_bytes(current_instruction);
       printf("\n");
     }
 
-    print_disassembled(current_instruction, regs.rip, &insn_decoder,
-                       &insn_formatter);
+    char *disassembled = disassembler_configuration.disassemble(current_instruction, regs.rip, disassembler_configuration.cookie);
+    printf("%llx: %s\n", regs.rip, disassembled);
+    free(disassembled);
   }
 
   printf("Trapsee exited ...\n");

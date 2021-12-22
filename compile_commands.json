@@ -1,13 +1,23 @@
 [
 {
   "directory": "/home/hawkinsw/code/trapse-build",
-  "command": "/usr/bin/cc   -g   -o CMakeFiles/hello_world.dir/hello_world.c.o   -c /home/hawkinsw/code/trapse/hello_world.c",
+  "command": "/usr/bin/cc  -I/home/hawkinsw/code/trapse/include  -g   -o CMakeFiles/hello_world.dir/hello_world.c.o   -c /home/hawkinsw/code/trapse/hello_world.c",
   "file": "/home/hawkinsw/code/trapse/hello_world.c"
 },
 {
   "directory": "/home/hawkinsw/code/trapse-build",
-  "command": "/usr/bin/cc  -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -pthread -o CMakeFiles/trapse.dir/trapse.c.o   -c /home/hawkinsw/code/trapse/trapse.c",
+  "command": "/usr/bin/cc  -I/home/hawkinsw/code/trapse/include -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -pthread -o CMakeFiles/trapse.dir/trapse.c.o   -c /home/hawkinsw/code/trapse/trapse.c",
   "file": "/home/hawkinsw/code/trapse/trapse.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build",
+  "command": "/usr/bin/cc  -I/home/hawkinsw/code/trapse/include -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -pthread -o CMakeFiles/trapse.dir/zydis.c.o   -c /home/hawkinsw/code/trapse/zydis.c",
+  "file": "/home/hawkinsw/code/trapse/zydis.c"
+},
+{
+  "directory": "/home/hawkinsw/code/trapse-build",
+  "command": "/usr/bin/cc  -I/home/hawkinsw/code/trapse/include -I/home/hawkinsw/code/trapse/deps/zydis/include -I/home/hawkinsw/code/trapse-build/deps/zydis -I/home/hawkinsw/code/trapse/deps/zydis/dependencies/zycore/include -I/home/hawkinsw/code/trapse-build/deps/zydis/zycore  -g   -pthread -o CMakeFiles/trapse.dir/os.c.o   -c /home/hawkinsw/code/trapse/os.c",
+  "file": "/home/hawkinsw/code/trapse/os.c"
 },
 {
   "directory": "/home/hawkinsw/code/trapse-build/deps/zydis",
