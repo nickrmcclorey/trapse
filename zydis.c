@@ -1,6 +1,6 @@
 #include <string.h>
-#include <trapse/zydis.h>
 #include <trapse/global.h>
+#include <trapse/zydis.h>
 
 bool zydis_initialize_disassembler(void *cookie) {
   ZydisCookie *z_cookie = (ZydisCookie *)cookie;
@@ -18,7 +18,7 @@ char *zydis_get_instruction_disassembly(uint8_t *instruction_bytes,
 
   const static char *DECODE_FAILURE = "---DECODE FAILURE---";
   const static int DECODE_FAILURE_LENGTH = 20 + 1;
-  #define DECODED_INSTRUCTION_BUFFER_LENGTH 256
+#define DECODED_INSTRUCTION_BUFFER_LENGTH 256
 
   ZydisCookie *z_cookie = (ZydisCookie *)cookie;
   ZydisDecoder *decoder = z_cookie->decoder;
