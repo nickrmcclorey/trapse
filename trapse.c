@@ -4,8 +4,11 @@
 #include <Zydis/SharedTypes.h>
 #include <Zydis/Zydis.h>
 
-#ifdef MACOSX86
+#if defined MACOSX86
 #include <sys/errno.h>
+#elif defined WINX86
+#include <Windows.h>
+#include <errno.h>
 #else
 #include <errno.h>
 #include <error.h>
@@ -19,11 +22,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#if defined LINUX || defined MACOSX86
 #include <sys/ptrace.h>
+#endif
 #include <sys/types.h>
+#if defined LINUX || defined MACOSX86
 #include <sys/user.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#endif
 
 #include <trapse/global.h>
 #include <trapse/os.h>
@@ -32,45 +39,19 @@
 extern int errno;
 extern char **environ;
 
-typedef struct {
-  char *executable_name;
-  bool debug;
-} Configuration;
-
-_Bool parse_configuration(int argc, char *argv[], Configuration *config) {
-  if (argc != 2) {
-    config->executable_name = NULL;
-    return false;
-  }
-  config->executable_name = argv[1];
-
-  config->debug = false;
-
-  return true;
-}
-
-void usage(char *invocation) { printf("Usage: %s <executable>\n", invocation); }
-
-void print_instruction_bytes(uint8_t *instruction_bytes) {
-  for (int i = 0; i < LARGEST_X86_64_INSTR; i++) {
-    printf("%hhx", instruction_bytes[i]);
-  }
-}
-
-// Plug and play disassemblers as long as they can adhere to this interface!
-typedef struct {
-  bool (*initializer)(void *);
-  char *(*disassemble)(uint8_t *, uint64_t, void *);
-  void *cookie;
-
-} DisassemblerConfiguration;
-
 // Functions for using the Zydis disassembler.
 
 int main(int argc, char *argv[]) {
-  Configuration config = {};
+  Configuration config = {.debug = false, .executable_name = NULL};
+#if defined LINUX || defined MACOSX86
   pid_t trapsee_pid = 0;
-  uint8_t current_instruction[LARGEST_X86_64_INSTR_PADDED] = {};
+#else
+  DWORD trapsee_pid = 0;
+#endif
+
+  uint8_t current_instruction[LARGEST_X86_64_INSTR_PADDED] = {
+      0,
+  };
 #ifdef LINUX
   struct user_regs_struct regs;
 #elif MACOSX86
@@ -98,11 +79,17 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+#if defined MACOSX || defined LINUX
   if (!spawn(&trapsee_pid, config.executable_name, config.debug)) {
-    printf("Failed to spawn the trapsee.\n");
-    return 1;
+#elif defined WINX86
+  if (!spawn(&trapsee_pid, config.executable_name, config.debug)) {
+#else
+  if (false) {
+#endif
+    exit_because(errno, 0);
   }
 
+#if defined MACOSX || defined LINUX
   // Do a post-execve waitpid just to make sure that everything
   // went according to plan ...
 
@@ -115,6 +102,7 @@ int main(int argc, char *argv[]) {
     printf("The trapsee has died before it could be trapsed.\n");
     return 1;
   }
+#endif
 
   if (config.debug) {
     printf("Tracing child with pid %d\n", trapsee_pid);
@@ -125,18 +113,20 @@ int main(int argc, char *argv[]) {
 
   for (;;) {
     // Now, we loop!
-#ifdef LINUX
+#if defined LINUX
     ptrace(PTRACE_SINGLESTEP, trapsee_pid, 0, 0);
-#elif MACOSX86
+#elif defined MACOSX86
     ptrace(PT_STEP, trapsee_pid, (caddr_t)1, 0);
+#elif defined WINX86
+    // Nothing required.
 #else
-    printf("Unrecognized platform!\n");
+  printf("Unrecognized platform!\n");
 #endif
 
+#if defined MACOSX || defined LINUX
     if (config.debug) {
       printf("We are waitingpid ...\n");
     }
-
     waitpid(trapsee_pid, &trapsee_status, 0);
 
     if (WIFSTOPPED(trapsee_status)) {
@@ -151,6 +141,93 @@ int main(int argc, char *argv[]) {
       }
       break;
     }
+#elif defined WINX86
+    DEBUG_EVENT debugEvent;
+    HANDLE threadHandle = NULL;
+    memset(&debugEvent, 0, sizeof(LPDEBUG_EVENT));
+
+    WaitForDebugEvent(&debugEvent, INFINITE);
+
+    switch (debugEvent.dwDebugEventCode) {
+    case EXCEPTION_DEBUG_EVENT: {
+      switch (debugEvent.u.Exception.ExceptionRecord.ExceptionCode) {
+      case EXCEPTION_SINGLE_STEP: {
+        threadHandle =
+            OpenThread(THREAD_ALL_ACCESS, TRUE, debugEvent.dwThreadId);
+        if (threadHandle == NULL) {
+          fprintf(stderr, "Error opening the trapsed thread.\n");
+          exit_because(GetLastError(), trapsee_pid);
+        }
+        if (!set_singlestep(&threadHandle)) {
+          fprintf(stderr, "Could not set single-stepping mode in a thread.\n");
+          exit_because(GetLastError(), trapsee_pid);
+        }
+        break;
+      }
+      default:
+        if (config.debug) {
+          printf("Unrecognized debug event exception!\n");
+        }
+        if (!ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId,
+                                DBG_CONTINUE)) {
+          exit_because(GetLastError(), trapsee_pid);
+        }
+        continue;
+      }
+      break;
+    }
+    case CREATE_PROCESS_DEBUG_EVENT: {
+      if (config.debug) {
+        printf("Windows process being created.\n");
+      }
+      if (!set_singlestep(&debugEvent.u.CreateProcessInfo.hThread)) {
+        fprintf(stderr, "Could not set single-stepping mode in a thread.\n");
+        exit_because(GetLastError(), trapsee_pid);
+      }
+      if (!ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId,
+                              DBG_CONTINUE)) {
+        exit_because(GetLastError(), trapsee_pid);
+      }
+      continue;
+    }
+    case CREATE_THREAD_DEBUG_EVENT: {
+      if (config.debug) {
+        printf("Thread being created!\n");
+      }
+      if (!set_singlestep(&debugEvent.u.CreateProcessInfo.hThread)) {
+        fprintf(stderr, "Could not set single-stepping mode in a thread.\n");
+        // exit_because(GetLastError(), trapsee_pid);
+      }
+      if (!ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId,
+                              DBG_CONTINUE)) {
+        exit_because(GetLastError(), trapsee_pid);
+      }
+      continue;
+    }
+    case EXIT_PROCESS_DEBUG_EVENT: {
+      if (config.debug) {
+        printf("Process exiting!\n");
+      }
+      // We only want the debugger to stop if the process exiting
+      // is that of the immediate trapsee.
+      DWORD exiting_pid = debugEvent.dwProcessId;
+      if (exiting_pid == trapsee_pid) {
+        printf("Trapsee finished...\n");
+        exit(0);
+      }
+    }
+    default: {
+      if (config.debug) {
+        printf("Unhandled debug event.\n");
+      }
+      if (!ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId,
+                              DBG_CONTINUE)) {
+        exit_because(GetLastError(), trapsee_pid);
+      }
+      continue;
+    }
+    }
+#endif
 
     bool get_rip_success = true;
 #ifdef LINUX
@@ -179,8 +256,15 @@ int main(int argc, char *argv[]) {
                                           &state_count));
 
     rip = thread_state.__rip;
+#elif defined WINX86
+    assert(threadHandle != NULL);
+
+    if (!get_rip(&threadHandle, &rip)) {
+      get_rip_success = false;
+      errno = GetLastError();
+    }
 #else
-    rip = 0;
+  rip = 0;
 #endif
 
     if (!get_rip_success) {
@@ -196,6 +280,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (config.debug) {
+      printf("Current instruction bytes: ");
       print_instruction_bytes(current_instruction);
       printf("\n");
     }
@@ -204,6 +289,14 @@ int main(int argc, char *argv[]) {
         current_instruction, rip, disassembler_configuration.cookie);
     printf("0x%llx: %s\n", rip, disassembled);
     free(disassembled);
+
+#if defined WINX86
+    if (!ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId,
+                            DBG_CONTINUE)) {
+      exit_because(GetLastError(), trapsee_pid);
+    }
+
+#endif
   }
 
   if (config.debug) {

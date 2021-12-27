@@ -5,7 +5,6 @@
 #include "Zydis/Formatter.h"
 #include <Zydis/SharedTypes.h>
 #include <Zydis/Zydis.h>
-#include <stdbool.h>
 
 // Functions for using the Zydis disassembler.
 typedef struct {
@@ -13,7 +12,7 @@ typedef struct {
   ZydisFormatter *formatter;
 } ZydisCookie;
 
-bool zydis_initialize_disassembler(void *cookie);
+_Bool zydis_initialize_disassembler(void *cookie);
 
 char *zydis_get_instruction_disassembly(uint8_t *instruction_bytes,
                                         uint64_t rip, void *cookie);

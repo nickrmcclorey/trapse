@@ -1,8 +1,9 @@
 #include <string.h>
 #include <trapse/global.h>
 #include <trapse/zydis.h>
+#include <stdbool.h>
 
-bool zydis_initialize_disassembler(void *cookie) {
+_Bool zydis_initialize_disassembler(void *cookie) {
   ZydisCookie *z_cookie = (ZydisCookie *)cookie;
   ZydisDecoder *decoder = z_cookie->decoder;
   ZydisFormatter *formatter = z_cookie->formatter;
@@ -25,7 +26,7 @@ char *zydis_get_instruction_disassembly(uint8_t *instruction_bytes,
   ZydisFormatter *formatter = z_cookie->formatter;
 
   char *ret = NULL;
-  char decoded_instruction_buffer[DECODED_INSTRUCTION_BUFFER_LENGTH] = {};
+  char decoded_instruction_buffer[DECODED_INSTRUCTION_BUFFER_LENGTH] = { 0, };
 
   ZydisDecodedInstruction instruction;
   ZydisDecodedOperand operands[ZYDIS_MAX_OPERAND_COUNT_VISIBLE];
