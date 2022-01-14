@@ -32,6 +32,12 @@
 #include <unistd.h>
 #endif
 
+#if defined LINUX && defined ARM
+#include <elf.h>
+#include <sys/uio.h>
+#include <trapse/capstone_arm.h>
+#endif
+
 #include <trapse/global.h>
 #include <trapse/os.h>
 #include <trapse/zydis.h>
@@ -62,6 +68,13 @@ int main(int argc, char *argv[]) {
 
   int trapsee_status = 0;
 
+#ifdef ARM
+  CapstoneArmCookie csa_cookie = {};
+  DisassemblerConfiguration disassembler_configuration = {
+      .initializer = capstone_arm_initialize_disassembler,
+      .disassemble = capstone_arm_get_instruction_disassembly,
+      .cookie = &csa_cookie};
+#else
   ZydisDecoder insn_decoder;
   ZydisFormatter insn_formatter;
 
@@ -71,6 +84,7 @@ int main(int argc, char *argv[]) {
       .initializer = zydis_initialize_disassembler,
       .disassemble = zydis_get_instruction_disassembly,
       .cookie = &z_cookie};
+#endif
 
   disassembler_configuration.initializer(disassembler_configuration.cookie);
 
@@ -230,12 +244,21 @@ int main(int argc, char *argv[]) {
 #endif
 
     bool get_rip_success = true;
-#ifdef LINUX
     // Let's try to get the rip!
+#ifdef LINUX
+#ifdef ARM
+    get_rip_success = true;
+    struct iovec result = {.iov_base = &regs, .iov_len = sizeof(regs)};
+    if (ptrace(PTRACE_GETREGSET, trapsee_pid, NT_PRSTATUS, &result)) {
+      get_rip_success = false;
+    }
+    rip = regs.pc;
+#else
     if (ptrace(PTRACE_GETREGS, trapsee_pid, NULL, &regs)) {
       get_rip_success = false;
     }
     rip = regs.rip;
+#endif
 #elif MACOSX86
     kern_return_t success;
     mach_port_t port;

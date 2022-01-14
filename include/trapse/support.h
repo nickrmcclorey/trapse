@@ -1,18 +1,19 @@
 #ifndef _TRAPSE_SUPPORT_H
 #define _TRAPSE_SUPPORT_H
 
+#include <stddef.h>
 #include <stdint.h>
 
 typedef struct {
-	char* executable_name;
-	_Bool debug;
+  char *executable_name;
+  _Bool debug;
 } Configuration;
 
-_Bool parse_configuration(int argc, char* argv[], Configuration* config);
+_Bool parse_configuration(int argc, char *argv[], Configuration *config);
 
-void usage(char* invocation);
+void usage(char *invocation);
 
-void print_instruction_bytes(uint8_t* instruction_bytes);
+void print_instruction_bytes(uint8_t *instruction_bytes);
 
 // Plug and play disassemblers as long as they can adhere to this interface!
 typedef struct {
