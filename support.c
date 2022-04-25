@@ -4,11 +4,13 @@
 #include <trapse/support.h>
 
 _Bool parse_configuration(int argc, char *argv[], Configuration *config) {
-  if (argc != 2) {
+  if (argc < 2 || argc > 3) {
     config->executable_name = NULL;
     return false;
   }
   config->executable_name = argv[1];
+
+  config->show_registers = (argc > 2 && !strcmp(argv[2], "--registers"));
 
   config->debug = false;
 
@@ -36,3 +38,4 @@ LPSTR win_strerror_create(DWORD errorID) {
 }
 void win_strerror_free(LPSTR to_free) { LocalFree(to_free); }
 #endif
+

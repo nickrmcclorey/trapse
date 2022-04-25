@@ -307,7 +307,18 @@ int main(int argc, char *argv[]) {
       print_instruction_bytes(current_instruction);
       printf("\n");
     }
-
+#if defined LINUX && !defined ARM
+	if (config.show_registers) {
+		printf("rax:0x%llx ", regs.rax);
+		printf("rcx:0x%llx ", regs.rcx);
+		printf("rdx:0x%llx ", regs.rdx);
+		printf("rsi:0x%llx ", regs.rsi);
+		printf("rdi:0x%llx ", regs.rdi);
+		printf("rbp:0x%llx ", regs.rbp);
+		printf("rsp:0x%llx ", regs.rsp);
+		printf("\n");
+	}
+#endif
     char *disassembled = disassembler_configuration.disassemble(
         current_instruction, rip, disassembler_configuration.cookie);
     printf("0x%llx: %s\n", rip, disassembled);

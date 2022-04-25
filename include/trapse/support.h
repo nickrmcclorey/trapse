@@ -7,6 +7,7 @@
 typedef struct {
   char *executable_name;
   _Bool debug;
+  _Bool show_registers;
 } Configuration;
 
 _Bool parse_configuration(int argc, char *argv[], Configuration *config);
