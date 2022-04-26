@@ -319,6 +319,16 @@ int main(int argc, char *argv[]) {
 		printf("\n");
 	}
 #endif
+
+	if (config.rip_entry) {
+		static bool seen_entry = false;
+		if (rip == config.rip_entry || seen_entry) {
+		  seen_entry = true;
+		  rip = rip - config.entry_offset;
+		}
+		
+	}
+
     char *disassembled = disassembler_configuration.disassemble(
         current_instruction, rip, disassembler_configuration.cookie);
     printf("0x%llx: %s\n", rip, disassembled);

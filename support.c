@@ -1,16 +1,33 @@
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <trapse/global.h>
 #include <trapse/support.h>
 
 _Bool parse_configuration(int argc, char *argv[], Configuration *config) {
-  if (argc < 2 || argc > 3) {
+  if (argc < 2 || argc > 4) {
     config->executable_name = NULL;
     return false;
   }
   config->executable_name = argv[1];
 
   config->show_registers = (argc > 2 && !strcmp(argv[2], "--registers"));
+
+  config->rip_entry = 0;
+  config->entry_offset = 0;
+  if (argc > 3) {
+  	char *colon = strstr(argv[3], ":0x");
+  	char *equal = strstr(argv[3], "=0x");
+	if (strstr(argv[3], "--entry=0x") == argv[3] && (colon > argv[3])) {
+	  colon += 3;
+	  equal += 3;
+	  long entry_with_offset = strtoul(equal, NULL, 16);
+	  long og_entry_point = strtoul(colon, NULL, 16);
+	  config->rip_entry = entry_with_offset;
+	  config->entry_offset = entry_with_offset - og_entry_point;
+	}
+  }
 
   config->debug = false;
 
