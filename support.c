@@ -4,13 +4,15 @@
 #include <trapse/support.h>
 
 _Bool parse_configuration(int argc, char *argv[], Configuration *config) {
-  if (argc < 2 || argc > 3) {
+  if (argc < 2 || argc > 4) {
     config->executable_name = NULL;
     return false;
   }
   config->executable_name = argv[1];
 
   config->show_registers = (argc > 2 && !strcmp(argv[2], "--registers"));
+
+  config->which_registers = argv[3];
 
   config->debug = false;
 

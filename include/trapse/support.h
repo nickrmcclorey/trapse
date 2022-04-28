@@ -8,11 +8,13 @@ typedef struct {
   char *executable_name;
   _Bool debug;
   _Bool show_registers;
+  char *which_registers;
 } Configuration;
 
 _Bool parse_configuration(int argc, char *argv[], Configuration *config);
 
 void usage(char *invocation);
+char *remove_white_spaces(char *str);
 
 void print_instruction_bytes(uint8_t *instruction_bytes);
 
