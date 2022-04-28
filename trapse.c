@@ -309,6 +309,17 @@ int main(int argc, char *argv[]) {
     }
 
 #if defined LINUX && !defined ARM 
+
+  if (config.rip_entry) {
+		static bool seen_entry = false;
+		if (rip == config.rip_entry || seen_entry) {
+		  seen_entry = true;
+		  rip = rip - config.entry_offset;
+		} else {
+      continue;
+    }
+	}
+
   if (config.which_registers != NULL)  {
     if(strstr(config.which_registers, "rax") != NULL){
       printf("rax:0x%llx ", regs.rax);
@@ -391,29 +402,12 @@ int main(int argc, char *argv[]) {
     if(strstr(config.which_registers, "gs") != NULL){
       printf("gs:0x%llx ", regs.gs);
     }
-  }
     printf("\n");
+  }
 
-
-	  //printf("rax:0x%llx ", regs.rax);
-		//printf("rcx:0x%llx ", regs.rcx);
-		//printf("rdx:0x%llx ", regs.rdx);
-		//printf("rsi:0x%llx ", regs.rsi);
-		//printf("rdi:0x%llx ", regs.rdi);
-		//printf("rbp:0x%llx ", regs.rbp);
-		//printf("rsp:0x%llx ", regs.rsp);
-	//	printf("\n");
-	//}
 #endif
 
-	if (config.rip_entry) {
-		static bool seen_entry = false;
-		if (rip == config.rip_entry || seen_entry) {
-		  seen_entry = true;
-		  rip = rip - config.entry_offset;
-		}
-		
-	}
+	
 
     char *disassembled = disassembler_configuration.disassemble(
         current_instruction, rip, disassembler_configuration.cookie);
