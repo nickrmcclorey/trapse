@@ -4,8 +4,11 @@
 #include <stddef.h>
 #include <stdint.h>
 
+
 typedef struct {
   char *executable_name;
+  unsigned long long rip_entry;
+  unsigned long long entry_offset;
   _Bool debug;
   _Bool show_registers;
   char *which_registers;
