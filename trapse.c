@@ -297,7 +297,7 @@ int main(int argc, char *argv[]) {
     }
 
     if (config.debug) {
-      printf("rip: 0x%llx\n", rip);
+      printf("rip: 0x%lx\n", rip);
     }
 
     if (!get_instruction_bytes(trapsee_pid, rip, current_instruction)) {
@@ -313,102 +313,16 @@ int main(int argc, char *argv[]) {
 #if defined LINUX && !defined ARM 
 
   if (config.rip_entry) {
-		static bool seen_entry = false;
-		if (rip == config.rip_entry || seen_entry) {
-		  seen_entry = true;
-		  rip = rip - config.entry_offset;
-		} else {
+	static bool seen_entry = false;
+	if (rip == config.rip_entry || seen_entry) {
+	  seen_entry = true;
+	  rip = rip - config.entry_offset;
+	} else {
       continue;
     }
-	}
-
-  if (config.which_registers != NULL)  {
-    if(strstr(config.which_registers, "rax") != NULL){
-      printf("rax:0x%llx ", regs.rax);
-    }
-    if(strstr(config.which_registers, "rcx") != NULL){
-      printf("rcx:0x%llx ", regs.rcx);
-    }
-    if(strstr(config.which_registers, "rdx") != NULL){
-      printf("rdx:0x%llx ", regs.rdx);
-    }
-    if(strstr(config.which_registers, "rsi") != NULL){
-      printf("rsi:0x%llx ", regs.rsi);
-    }
-    if(strstr(config.which_registers, "rdi") != NULL){
-      printf("rdi:0x%llx ", regs.rdi);
-    }
-    if(strstr(config.which_registers, "rbp") != NULL){
-      printf("rbp:0x%llx ", regs.rbp);
-    }
-    if(strstr(config.which_registers, "rsp") != NULL){
-      printf("rsp:0x%llx ", regs.rsp);
-    }
-    if(strstr(config.which_registers, "r15") != NULL){
-      printf("r15:0x%llx ", regs.r15);
-    }
-    if(strstr(config.which_registers, "r14") != NULL){
-      printf("r14:0x%llx ", regs.r14);
-    }
-    if(strstr(config.which_registers, "r13") != NULL){
-      printf("r13:0x%llx ", regs.r13);
-    }
-    if(strstr(config.which_registers, "r12") != NULL){
-      printf("r12:0x%llx ", regs.r12);
-    }
-    if(strstr(config.which_registers, "r11") != NULL){
-      printf("r11:0x%llx ", regs.r11);
-    }  
-    if(strstr(config.which_registers, "rbx") != NULL){
-      printf("rbx:0x%llx ", regs.rbx);
-    }  
-    if(strstr(config.which_registers, "r10") != NULL){
-      printf("r10:0x%llx ", regs.r10);
-    }
-    if(strstr(config.which_registers, "r9") != NULL){
-      printf("r9:0x%llx ", regs.r9);
-    }
-    if(strstr(config.which_registers, "r8") != NULL){
-      printf("r8:0x%llx ", regs.r8);
-    }
-    if(strstr(config.which_registers, "orig_rax") != NULL){
-      printf("orig_rax:0x%llx ", regs.orig_rax);
-    }
-    if(strstr(config.which_registers, "rip") != NULL){
-      printf("rip:0x%llx ", regs.rip);
-    }
-    if(strstr(config.which_registers, "cs") != NULL){
-      printf("cs:0x%llx ", regs.cs);
-    }
-    if(strstr(config.which_registers, "eflags") != NULL){
-      printf("eflags:0x%llx ", regs.eflags);
-    }
-    if(strstr(config.which_registers, "ss") != NULL){
-      printf("ss:0x%llx ", regs.ss);
-    }
-    if(strstr(config.which_registers, "fs_base") != NULL){
-      printf("fs_base:0x%llx ", regs.fs_base);
-    }
-    if(strstr(config.which_registers, "gs_base") != NULL){
-      printf("gs_base:0x%llx ", regs.gs_base);
-    }
-    if(strstr(config.which_registers, "ds") != NULL){
-      printf("ds:0x%llx ", regs.ds);
-    }
-    if(strstr(config.which_registers, "es") != NULL){
-      printf("es:0x%llx ", regs.es);
-    }
-    if(strstr(config.which_registers, "fs") != NULL){
-      printf("fs:0x%llx ", regs.fs);
-    }
-    if(strstr(config.which_registers, "gs") != NULL){
-      printf("gs:0x%llx ", regs.gs);
-    }
-    printf("\n");
   }
 
-
-    if (config.which_registers != NULL){ //&& export text is selected)  
+  if (config.which_registers != NULL){ //&& export text is selected)  
     if(strstr(config.which_registers, "rax") != NULL){
       printf("rax:0x%llx ", regs.rax);
       fprintf(fp,"rax:0x%llx ", regs.rax);
@@ -517,19 +431,16 @@ int main(int argc, char *argv[]) {
       printf("gs:0x%llx ", regs.gs);
       fprintf(fp,"gs:0x%llx ", regs.gs);
     }
-    printf("\n");
+	fprintf(fp, "\n");
+	printf("\n");
   }
-   printf("\n");
 
 #endif
 
-	
-
     char *disassembled = disassembler_configuration.disassemble(
         current_instruction, rip, disassembler_configuration.cookie);
-    printf("0x%llx: %s\n", rip, disassembled);
-    fprintf(fp,"0x%llx: %s\n", rip, disassembled);
-    printf("\n");
+    printf("0x%lx: %s\n", rip, disassembled);
+    fprintf(fp,"0x%lx: %s\n", rip, disassembled);
 
     free(disassembled);
 
