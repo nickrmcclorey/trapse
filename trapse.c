@@ -456,5 +456,6 @@ int main(int argc, char *argv[]) {
   if (config.debug) {
     printf("Trapsee exited ...\n");
   }
+  fclose(fp);
   return 0;
 }

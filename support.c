@@ -55,7 +55,7 @@ _Bool parse_configuration(int argc, char *argv[], Configuration *config) {
   return true;
 }
 
-void usage(char *invocation) { printf("Usage: %s <executable>\n", invocation); }
+void usage(char *invocation) { printf("Usage: %s <executable> [options]\n", invocation); }
 
 void print_instruction_bytes(uint8_t *instruction_bytes) {
   for (int i = 0; i < LARGEST_X86_64_INSTR; i++) {
